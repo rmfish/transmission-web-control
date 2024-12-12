@@ -109,6 +109,42 @@
                         </td>
                     </tr>
                     <tr>
+                        <td colspan="2">
+                            <input id="http-proxy-enabled" type="checkbox" style="width:16px;"/>
+                            <label id="system-config-http-proxy-enabled" for="http-proxy-enabled"></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input id="http-proxy" value="http://127.0.0.1:6152" type="text" style="width:100%;" enabledof="http-proxy-enabled"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input id="skip-verify-enabled" type="checkbox" style="width:16px;"/>
+                            <label id="system-config-skip-verify-enabled" for="skip-verify-enabled">启用快速检测</label>
+                        </td>
+                        <td>
+                            <input id="auto-remove-enabled" type="checkbox" style="width:16px;"/>
+                            <label id="system-config-auto-remove-enabled" for="skip-verify-enabled">自动清理已删除种子</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input id="auto-stop-upload-enabled" type="checkbox" style="width:16px;"/>
+                            <label id="system-config-auto-stop-upload-enabled" for="auto-stop-upload-enabled">自动关闭红黄种上传</label>
+                        </td>
+                        <td>
+                            <input id="same-peer-id-enabled" type="checkbox" style="width:16px;"/>
+                            <label id="system-config-same-peer-id-enabled" for="same-peer-id-enabled">避免重启重复做种</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <hr/>
+                        </td>
+                    </tr>
+                    <tr>
                         <td>
                             <span id="system-config-encryption"></span>
                         </td>
@@ -562,7 +598,7 @@
         thisDialog.find('#system-config-blocklist-size').html(system.lang.dialog['system-config']['blocklist-size'].replace('%n', system.serverConfig['blocklist-size']));
 
         title = ('config-dir,download-dir,incomplete-dir-enabled,cache-size-mb,rename-partial-files,download-dir-free-space,start-added-torrents' +
-          ',download-queue-enabled,seed-queue-enabled,encryption,peer-port-random-on-start,speed-limit-down-enabled,speed-limit-up-enabled' +
+          ',download-queue-enabled,seed-queue-enabled,encryption,peer-port-random-on-start,http-proxy-enabled,speed-limit-down-enabled,speed-limit-up-enabled' +
           ',alt-speed-enabled,alt-speed-down,alt-speed-up,test-port,port-forwarding-enabled,utp-enabled,dht-enabled,lpd-enabled,pex-enabled' +
           ',peer-limit-global,peer-limit-per-torrent,blocklist-enabled,seedRatioLimited,queue-stalled-enabled,idle-seeding-limit-enabled' +
           ',alt-speed-time-enabled,alt-speed-time,nochange,port-is-open-true,port-is-open-false,language'
@@ -576,7 +612,7 @@
       // 初始化参数值
       initConfigValue: function () {
         // Replace system settings
-        var title = ('incomplete-dir-enabled,rename-partial-files,start-added-torrents,download-queue-enabled,seed-queue-enabled' +
+        var title = ('incomplete-dir-enabled,rename-partial-files,start-added-torrents,http-proxy-enabled,download-queue-enabled,seed-queue-enabled' +
           ',peer-port-random-on-start,speed-limit-down-enabled,speed-limit-up-enabled,alt-speed-enabled,idle-seeding-limit-enabled' +
           ',port-forwarding-enabled,utp-enabled,dht-enabled,lpd-enabled,pex-enabled,blocklist-enabled,seedRatioLimited,queue-stalled-enabled' +
           ',alt-speed-time-enabled,script-torrent-done-enabled'
@@ -615,6 +651,7 @@
         thisDialog.find('#seed-queue-size').val(system.serverConfig['seed-queue-size']).prop('disabled', !system.serverConfig['seed-queue-enabled']);
         thisDialog.find('#peer-port').val(system.serverConfig['peer-port']).prop('disabled', system.serverConfig['peer-port-random-on-start']);
 
+        thisDialog.find('#http-proxy').val(system.serverConfig['http-proxy']).prop('disabled', !system.serverConfig['http-proxy-enabled']);
         thisDialog.find('#speed-limit-down').val(system.serverConfig['speed-limit-down']).prop('disabled', !system.serverConfig['speed-limit-down-enabled']);
         thisDialog.find('#speed-limit-up').val(system.serverConfig['speed-limit-up']).prop('disabled', !system.serverConfig['speed-limit-up-enabled']);
 

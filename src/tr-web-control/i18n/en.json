@@ -332,6 +332,7 @@
 		"fields": {
 			"id": "#",
 			"name": "Name",
+			"official": "Official",
 			"hashString": "HASH",
 			"downloadDir": "Download Dir",
 			"totalSize": "Total size",

@@ -19,6 +19,34 @@ transmission.torrents = {
 		status: "id,name,status,totalSize,percentDone,trackerStats,leftUntilDone,rateDownload,rateUpload,recheckProgress" + ",rateDownload,rateUpload,peersGettingFromUs,peersSendingToUs,uploadRatio,uploadedEver,downloadedEver,error,errorString,doneDate,queuePosition,activityDate",
 		config: "id,name,downloadLimit,downloadLimited,peer-limit,seedIdleLimit,seedIdleMode,seedRatioLimit,seedRatioMode,uploadLimit,uploadLimited"
 	},
+	site_mapping:{
+		"xukong":"观众-Audies",
+		"audiences":"观众-Audies",
+		"btschool":"学校-btschool",
+		"nginx2":"月月-FRDS",
+		"keepfrds":"月月-FRDS",
+		"hhanclub":"憨憨-HH",
+		"et8":"TCCF",
+		"pterclub":"🐱-Pter",
+		"leaguehd":"🍋-League",
+		"piggo":"🐷-Pigo",
+		"sharkpt":"🦈-Shark",
+		"springsunday":"春天-SSD",
+		"m-team":"🫓-mteam",
+		"upxin":"好多油-upxin",
+	},
+	official_torrent_name:{
+		"audiences":['ADWeb','@Audies'],
+		"hhanclub":['HHWEB'],
+		"beitai":['BeiTai'],
+		"m-team":['MTeamPAD','MTeam'],
+		"sharkpt":['SharkWEB'],
+		"springsunday":['CMCT'],
+		"leaguehd":['LeagueWEB'],
+		"et8":['BMDru'],
+		"keepfrds":['FRDS'],
+		"piggo":['PigoWeb']
+	},
 	// List of all the torrents that have been acquired
 	datas: {},
 	// The list of recently acquired torrents
@@ -253,8 +281,13 @@ transmission.torrents = {
 					trackerUrl.shift();
 				}
 
-				var name = trackerUrl.join(".");
-				var id = "tracker-" + name.replace(/\./g, "-");
+				let name = trackerInfo.sitename;
+				if(name in this.site_mapping){
+					name = this.site_mapping[name];
+				}
+				// var name = trackerUrl.join(".");
+				// var id = "tracker-" + name.replace(/\./g, "-");
+				var id = "tracker-" + name;
 				var tracker = transmission.trackers[id];
 				if (!tracker) {
 					transmission.trackers[id] = {
@@ -266,7 +299,6 @@ transmission.torrents = {
 					};
 					tracker = transmission.trackers[id];
 				}
-
 				tracker["name"] = name;
 				tracker["nodeid"] = id;
 				tracker["host"] = trackerInfo.host;
@@ -290,6 +322,15 @@ transmission.torrents = {
 				item.seederCount += trackerInfo.seederCount;
 				if (trackers.indexOf(name)==-1) {
 					trackers.push(name);
+				}
+				if(!item['official']&&name in this.official_torrent_name){
+					const suffixes = this.official_torrent_name[name]
+					for(const suffix in suffixes){
+						if(item['name'].includes(suffix)){
+							item['official'] = true;
+							break;
+						}
+					}
 				}
 			}
 

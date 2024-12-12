@@ -65,6 +65,15 @@ var transmission = {
 	init: function(config, callback) {
 		jQuery.extend(this, config);
 
+		let remote = false;
+		if (remote){
+			this.host= "https://bt.frp.rmfish.top";
+			this.rpcpath =  "https://bt.frp.rmfish.top/transmission/rpc";
+			this.username= "jiangyu";
+			this.password= "1p$YyeRW#VMX";
+			this.port = "";
+		}
+
 		/*
 		if (this.fullpath=="")
 		{
@@ -73,7 +82,6 @@ var transmission = {
 		if (this.username && this.password) {
 			this.headers["Authorization"] = "Basic " + (new Base64()).encode(this.username + ":" + this.password);
 		}
-
 		this.fullpath = this.rpcpath;
 		this.getSessionId(this, callback);
 	},
